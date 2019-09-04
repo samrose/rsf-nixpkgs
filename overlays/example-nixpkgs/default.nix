@@ -4,10 +4,10 @@ with final;
 with lib;
 
 {
-  mkImage = profile:
+  mkImage = imports:
     let
       system = nixos {
-        imports = [ profile ];
+        inherit imports;
       };
 
       imageNames = filter (name: hasAttr name system) [
@@ -22,6 +22,6 @@ with lib;
   example = callPackage ./example {};
 
   example-nixpkgs = recurseIntoAttrs {
-    qemu = mkImage ../../profiles/hardware/qemu;
+    qemu = mkImage [ ../../profiles/hardware/qemu ];
   };
 }
