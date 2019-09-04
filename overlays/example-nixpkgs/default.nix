@@ -4,7 +4,7 @@ with final;
 with lib;
 
 {
-  mkImage = imports:
+  buildImage = imports:
     let
       system = nixos {
         inherit imports;
@@ -22,6 +22,6 @@ with lib;
   example = callPackage ./example {};
 
   example-nixpkgs = recurseIntoAttrs {
-    qemu = mkImage [ ../../profiles/hardware/qemu ];
+    qemu = buildImage [ ../../profiles/hardware/qemu ];
   };
 }
