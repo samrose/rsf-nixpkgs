@@ -22,6 +22,17 @@ with lib;
   example = callPackage ./example {};
 
   example-nixpkgs = recurseIntoAttrs {
-    qemu = buildImage [ ../../profiles/hardware/qemu ];
+    profile = tryDefault <nixos-config> ../../profiles;
+
+    qemu = buildImage [
+      ../../profiles/hardware/qemu
+      example-nixpkgs.profile
+    ];
   };
+
+  tryDefault = x: default:
+    let
+      eval = builtins.tryEval x;
+    in
+    if eval.success then eval.value else default;
 }
