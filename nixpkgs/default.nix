@@ -3,17 +3,19 @@ let
   patches = [];
 in
 
-with import nixpkgs { overlays = []; };
+  with import nixpkgs { overlays = []; };
 
-import (stdenvNoCC.mkDerivation {
-  name = "nixpkgs";
-  src = nixpkgs;
+  import (
+    stdenvNoCC.mkDerivation {
+      name = "nixpkgs";
+      src = nixpkgs;
 
-  phases = [ "unpackPhase" "patchPhase" "installPhase" ];
+      phases = [ "unpackPhase" "patchPhase" "installPhase" ];
 
-  inherit patches;
+      inherit patches;
 
-  installPhase = ''
-    mv $PWD $out
-  '';
-})
+      installPhase = ''
+        mv $PWD $out
+      '';
+    }
+  )
