@@ -2,6 +2,6 @@
   disabledModules = [];
 
   imports = [
-    ./services/example.nix
+    ./services/noflo-rsf.nix
   ];
 }

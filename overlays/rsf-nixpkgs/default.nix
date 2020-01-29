@@ -6,10 +6,10 @@ with lib;
 let
 
   npm-to-nix = fetchFromGitHub {
-    owner = "transumption-unstable";
+    owner = "samrose";
     repo = "npm-to-nix";
-    rev = "6d2cbbc9d58566513019ae176bab7c2aeb68efae";
-    sha256 = "1wm9f2j8zckqbp1w7rqnbvr8wh6n072vyyzk69sa6756y24sni9a";
+    rev = "a223e2443e20f26e5af9766feecbce6eba644335";
+    sha256 = "11hbdb32fh6yhfv6li0cyn6wwyxmql932jjl7nmlx03mzl6h89xd";
   };
   buildImage = imports:
     let
@@ -25,16 +25,22 @@ let
       ];
     in
       head (attrVals imageNames system);
-
-
+  gitignore = fetchFromGitHub {
+    owner = "hercules-ci";
+    repo = "gitignore";
+    rev = "f9e996052b5af4032fe6150bba4a6fe4f7b9d698";
+    sha256 = "0jrh5ghisaqdd0vldbywags20m2cxpkbbk5jjjmwaw0gr8nhsafv";
+  };
 in
 
 
 {
 
+  inherit (callPackage gitignore {}) gitignoreSource;
+
   inherit (callPackage npm-to-nix {}) npmToNix;
 
-  noflo-rapid-sensemaking-server = callPackage ./noflo-rapid-sensemaking-server {};
+  noflo-rsf = callPackage ./noflo-rsf {};
   rsf-nixpkgs = recurseIntoAttrs {
     profile = tryDefault <nixos-config> ../../profiles;
 

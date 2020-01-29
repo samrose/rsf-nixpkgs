@@ -3,24 +3,24 @@
 with lib;
 
 let
-  cfg = config.services.example;
+  cfg = config.services.noflo-rsf;
 in
 
 {
-  options.services.example = {
+  options.services.noflo-rsf = {
     enable = mkEnableOption "Example";
 
     package = mkOption {
-      default = pkgs.example;
+      default = pkgs.noflo-rsf;
       type = types.package;
     };
   };
 
   config = mkIf cfg.enable {
-    systemd.services.example = {
+    systemd.services.noflo-rsf = {
       wantedBy = [ "multi-user.target" ];
 
-      serviceConfig.ExecStart = "${cfg.package}/bin/example";
+      serviceConfig.ExecStart = "${cfg.package}/bin";
     };
   };
 }
